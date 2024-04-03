@@ -1,3 +1,4 @@
+import pathlib
 import pytest
 
 from src.hex_converter import (  # noqa: F401
@@ -25,3 +26,9 @@ def test_capsys(capsys):
     captured = capsys.readouterr()
     assert captured.out == "10\n"
     assert captured.err == ""
+
+
+def test_tmp_path(tmp_path):
+    dir = tmp_path / "output.txt"
+    write_hexadecimal_to_decimal("a", dir)
+    assert pathlib.Path(dir).read_text() == "10"
